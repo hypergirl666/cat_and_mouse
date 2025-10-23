@@ -10,9 +10,9 @@ def load_image(name, scale=None, assets_dir="assets"):
     except BaseException:
         print(f"Ошибка загрузки: {os.path.join(assets_dir, name)}")
         surf = pygame.Surface((100, 100))
-        surf.fill(
-            (random.randint(
-                0, 255), random.randint(
-                0, 255), random.randint(
-                0, 255)))
+        surf.fill((
+            random.randint(0, 255),
+            random.randint(0, 255),
+            random.randint(0, 255)
+        ))
         return surf
