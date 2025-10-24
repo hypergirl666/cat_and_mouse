@@ -34,7 +34,7 @@ class Player(IGameObject, ICollidable):
         self._hitbox = None
         self._update_hitbox()
 
-    # === СВОЙСТВА ДЛЯ КОНТРОЛИРУЕМОГО ДОСТУПА ===
+    # Свойства контролируемого доступа
 
     @property
     def width(self) -> int:
