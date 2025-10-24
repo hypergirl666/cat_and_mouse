@@ -1,5 +1,6 @@
 import pygame
 from src.utils.resource_loader import ResourceLoader
+from src.view.mouse_view import MouseView
 from constants import BACKGROUND_IMAGE, SCREEN_WIDTH, SCREEN_HEIGHT
 from typing import TYPE_CHECKING
 
@@ -38,6 +39,7 @@ class GameView:
         self._player_view = player_view
         self._world_view = world_view
         self._debug_view = debug_view
+        self._mouse_view = MouseView()
 
     def render(
         self,
@@ -64,6 +66,17 @@ class GameView:
         if game_state.show_hitboxes:
             self._player_view.draw_player_hitbox(self.screen, player)
             self._world_view.draw_hitboxes(self.screen, world)
+
+        # Мыши
+        self._mouse_view.draw(self.screen,
+                              world.get_visible_mice(),
+                              world.world_offset)
+
+        # Хитбоксы мышей
+        if game_state.show_hitboxes:
+            self._mouse_view.draw_hitboxes(self.screen,
+                                           world.get_visible_mice(),
+                                           world.world_offset)
 
         self._debug_view.draw(self.screen, player, world, game_state)
 

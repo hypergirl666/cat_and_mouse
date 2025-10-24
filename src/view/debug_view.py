@@ -1,6 +1,10 @@
 import pygame
 from src.view.hitbox_renderer import HitboxRenderer
-from constants import DEBUG_TEXT_COLOR
+from constants import (
+    DEBUG_TEXT_COLOR, DEBUG_FONT_NAME,
+    DEBUG_FONT_SIZE, DEBUG_LINE_SPACING,
+    DEBUG_MARGIN
+)
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
@@ -9,8 +13,10 @@ if TYPE_CHECKING:
 
 class DebugView:
     def __init__(self):
-        self.font = pygame.font.SysFont(None, 24)
+        self.font = pygame.font.SysFont(DEBUG_FONT_NAME, DEBUG_FONT_SIZE)
         self._hitbox_renderer = HitboxRenderer()
+        self._line_spacing = DEBUG_LINE_SPACING
+        self._margin = DEBUG_MARGIN
 
     def draw(self,
              screen,
@@ -24,6 +30,7 @@ class DebugView:
             f"Y: {player.y:.1f}",
             f"Платформ: {world.platform_count}",
             f"Хитбоксы: {'ON' if game_state.show_hitboxes else 'OFF'} (H)",
+            f"Активных мышей: {world.active_mice_count}",
         ]
 
         # Добавляем информацию о звуке, если передан sound_manager
@@ -38,4 +45,5 @@ class DebugView:
 
         for i, text in enumerate(debug_text):
             text_surface = self.font.render(text, True, DEBUG_TEXT_COLOR)
-            screen.blit(text_surface, (10, 10 + i * 25))
+            screen.blit(text_surface, (self._margin,
+                                       self._margin + i * self._line_spacing))

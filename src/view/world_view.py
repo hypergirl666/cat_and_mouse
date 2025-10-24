@@ -37,8 +37,8 @@ class WorldView:
         for i in range(0, platform_width_int, tile_width):
             surface.blit(self.platform_img, (i, 0))
 
-        screen_x = int(platform.x - world_offset)  # Приводим к int для blit
-        screen_y = int(platform.y)  # Приводим к int для blit
+        screen_x = int(platform.x - world_offset)
+        screen_y = int(platform.y)
         screen.blit(surface, (screen_x, screen_y))
 
     def draw_hitboxes(self, screen, world) -> None:

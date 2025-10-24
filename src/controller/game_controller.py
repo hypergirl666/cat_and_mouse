@@ -9,6 +9,7 @@ from src.utils.sound_manager import SoundManager
 from constants import (
     BACKGROUND_MUSIC, SOUND_VOLUME,
     TOGGLE_MUSIC_KEY, TOGGLE_SOUND_KEY,
+    MOUSE_SCORE
 )
 
 
@@ -30,8 +31,9 @@ class GameController(IInputCallbacks):
         # Временное состояние
         self._current_movement = 0.0
         self._was_on_ground = False
+        self._last_mouse_count = 0
 
-    # === СВОЙСТВА ДЛЯ КОНТРОЛИРУЕМОГО ДОСТУПА ===
+    # Свойства для контролируемого доступа
 
     @property
     def game_state(self) -> GameState:
@@ -58,7 +60,7 @@ class GameController(IInputCallbacks):
         """Звуки (только чтение)"""
         return self._sound_manager
 
-    # === РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА IInputCallbacks ===
+    # Реализация интерфейса IInputCallbacks
 
     def _load_sounds(self) -> None:
         """Загружает все звуки и музыку"""
@@ -81,7 +83,7 @@ class GameController(IInputCallbacks):
         """Получение вектора движения"""
         return self._input_handler.get_movement(can_move_left)
 
-    # === ПРИВАТНЫЕ МЕТОДЫ ОБНОВЛЕНИЯ ===
+    # Приватные методы обновления
 
     def _process_input(self) -> None:
         """Обработка ввода пользователя"""
@@ -103,14 +105,18 @@ class GameController(IInputCallbacks):
 
     def _handle_collisions(self) -> None:
         """Обработка коллизий"""
-        self._world.check_player_collisions(self._player)
+        had_collision = self._world.check_player_collisions(self._player)
 
-    def _check_game_conditions(self) -> None:
-        """Проверка игровых условий (победа/поражение)"""
-        # Можно добавить проверку условий победы/поражения
-        pass
+        if had_collision:
+            self._sound_manager.play_sound("collision")
 
-    # === ПУБЛИЧНЫЕ МЕТОДЫ ===
+        # Проверяем сбор мышей и начисляем очки
+        if self._world.collected_mice_count > self._last_mouse_count:
+            self._game_state.add_score(MOUSE_SCORE)
+            self._sound_manager.play_sound("mouse_collect")
+            self._last_mouse_count = self._world.collected_mice_count
+
+    # Публичные методы
 
     def handle_events(self) -> None:
         """Обработка событий ввода"""
@@ -146,7 +152,6 @@ class GameController(IInputCallbacks):
         self._update_world()
         self._update_player()
         self._handle_collisions()
-        self._check_game_conditions()
 
     def run(self) -> None:
         """Запуск игры через GameLoop"""

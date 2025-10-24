@@ -5,7 +5,8 @@ from constants import (
     PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_JUMP_POWER,
     PLAYER_GRAVITY, PLAYER_HITBOX_WIDTH, PLAYER_HITBOX_HEIGHT,
     PLAYER_HITBOX_OFFSET_X, PLAYER_HITBOX_OFFSET_Y,
-    SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_INITIAL_Y,
+    SCREEN_HEIGHT, PLAYER_INITIAL_Y,
+    PLAYER_INITIAL_X
 )
 
 
@@ -15,7 +16,7 @@ class Player(IGameObject, ICollidable):
         # Приватные атрибуты
         self._width = PLAYER_WIDTH
         self._height = PLAYER_HEIGHT
-        self._x = SCREEN_WIDTH // 2 - PLAYER_WIDTH // 2
+        self._x = PLAYER_INITIAL_X
         self._y = PLAYER_INITIAL_Y
         self._speed = PLAYER_SPEED
         self._jump_power = PLAYER_JUMP_POWER
@@ -124,7 +125,7 @@ class Player(IGameObject, ICollidable):
         """Хитбокс игрока (только чтение)"""
         return self._hitbox
 
-    # === ПРИВАТНЫЕ МЕТОДЫ ===
+    # Приватные методы
 
     def _update_hitbox(self) -> None:
         """Обновляет позицию хитбокса игрока"""
@@ -171,7 +172,7 @@ class Player(IGameObject, ICollidable):
             self.vel_y = 0
             self.is_jumping = False
 
-    # === РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА IGameObject ===
+    # Реализация интерфейса IGameObject
 
     def update(self, platforms: List, x_movement: float = 0) -> None:
         """
@@ -203,7 +204,7 @@ class Player(IGameObject, ICollidable):
         """IGameObject - возвращает хитбокс"""
         return self._hitbox
 
-    # === РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА ICollidable ===
+    # Реализация интерфейса ICollidable
 
     def check_collision(self, other) -> bool:
         """ICollidable - проверка коллизии"""
@@ -231,7 +232,7 @@ class Player(IGameObject, ICollidable):
         """
         return self._hitbox
 
-    # === ПУБЛИЧНЫЕ МЕТОДЫ ИГРОКА ===
+    # Публичные методы
 
     def jump(self) -> None:
         """Выполняет прыжок, если игрок на земле"""

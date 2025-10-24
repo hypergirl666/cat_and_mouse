@@ -15,7 +15,7 @@ class GameLoop:
         self._view = None
 
     def _initialize_views(self) -> GameView:
-        """Инициализация всех view с внедрением зависимостей"""
+        """Инициализация всех view"""
         player_view = PlayerView()
         world_view = WorldView()
         debug_view = DebugView()
@@ -33,7 +33,7 @@ class GameLoop:
         self._screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption(SCREEN_TITLE)
         self._clock = pygame.time.Clock()
-        self._view = self._initialize_views()  # ✅ Внедрение зависимостей
+        self._view = self._initialize_views()
 
     def _process_events(self) -> None:
         """Обработка всех событий ввода"""

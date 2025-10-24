@@ -21,7 +21,7 @@ class Platform(IGameObject, ICollidable):
         self._hitbox_height = PLATFORM_HITBOX_HEIGHT
         self._hitbox_y_offset = PLATFORM_HITBOX_OFFSET
 
-    # === СВОЙСТВА ДЛЯ КОНТРОЛИРУЕМОГО ДОСТУПА ===
+    # Свойства контролируемого доступа
 
     @property
     def x(self) -> float:
@@ -43,7 +43,7 @@ class Platform(IGameObject, ICollidable):
         """Высота платформы (только чтение)"""
         return self._height
 
-    # === РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА IGameObject ===
+    # Реализация интерфейса IGameObject
 
     def update(self, *args, **kwargs) -> None:
         """
@@ -64,7 +64,7 @@ class Platform(IGameObject, ICollidable):
         """IGameObject - возвращает размеры"""
         return self._width, self._height
 
-    # === РЕАЛИЗАЦИЯ ИНТЕРФЕЙСА ICollidable ===
+    # Реализация интерфейса ICollidable
 
     def check_collision(self, other) -> bool:
         """ICollidable - проверка коллизии"""
@@ -81,7 +81,7 @@ class Platform(IGameObject, ICollidable):
         """
         pass
 
-    # === ПУБЛИЧНЫЕ МЕТОДЫ PLATFORM ===
+    # Публичные методы
 
     def get_hitbox(self, world_offset: float = 0) -> pygame.Rect:
         """

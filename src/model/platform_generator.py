@@ -7,12 +7,13 @@ from constants import (
     MIN_PLATFORM_WIDTH, MAX_PLATFORM_WIDTH,
     PLATFORM_START_Y, PLATFORM_HEIGHT_VARIATION,
     PLATFORM_Y_RANGE_MIN, PLATFORM_Y_RANGE_MAX,
-    START_PLATFORM_WIDTH, INITIAL_PLATFORMS
+    START_PLATFORM_WIDTH, INITIAL_PLATFORMS,
+    PLATFORM_ALTERNATION_PATTERN, PLATFORM_ALTERNATION_MULTIPLIER
 )
 
 
 class PlatformGenerator:
-    """Отвечает только за генерацию платформ"""
+    """Отвечает за генерацию платформ"""
 
     def __init__(self):
         pass
@@ -35,7 +36,10 @@ class PlatformGenerator:
                 + random.randint(PLATFORM_SPACING_MIN, PLATFORM_SPACING_MAX)
             )
 
-            y = PLATFORM_START_Y - (i % 2) * PLATFORM_HEIGHT_VARIATION
+            y = (PLATFORM_START_Y -
+                 (i % PLATFORM_ALTERNATION_PATTERN) *
+                 PLATFORM_HEIGHT_VARIATION *
+                 PLATFORM_ALTERNATION_MULTIPLIER)
             width = random.randint(MIN_PLATFORM_WIDTH, MAX_PLATFORM_WIDTH)
 
             new_platform = Platform(x, y, width)

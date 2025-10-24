@@ -5,7 +5,7 @@ class GameState:
         self._score = 0
         self._world_offset = 0.0
 
-    # === СВОЙСТВА ДЛЯ ДОСТУПА К ДАННЫМ ===
+    # Свойства для доступа к данным
 
     @property
     def running(self) -> bool:
@@ -41,7 +41,7 @@ class GameState:
         """Смещение мира (чтение)"""
         return self._world_offset
 
-    # === ПУБЛИЧНЫЕ МЕТОДЫ ДЛЯ УПРАВЛЕНИЯ СОСТОЯНИЕМ ===
+    # Публичные методы для управления состоянием
 
     def toggle_hitboxes(self) -> None:
         """Переключение отображения хитбоксов"""
